@@ -144,6 +144,7 @@
 - Rare disease: many healthy people → lots of **false positives** even at low **P(+|healthy)**.
 - A **+** is weak evidence unless **prior** is high or test is very accurate.
 - **Lecture (Zika-style):** **P(Z)≈0.001**, **P(+|Z)≈0.99**, **P(+|Zᶜ)≈0.05** → **P(Z|+)≈0.019** (~2%).
+- **What each rate is:** **P(+|Z)≈0.99** = **true positive** rate (sensitivity): infected → test **+**. **P(+|Zᶜ)≈0.05** = **false positive** rate: **not** infected but test **+** anyway — so **0.05** is **not** a false-negative rate. **False negative** rate is **P(−|Z)** ≈ **1 − 0.99 = 0.01** (infected but test **−**).
 - Interpretation: belief moves up from **0.1%**, but **P(+)** is still mostly healthy people testing positive.
 
 **Confusion-matrix intuition (~1000 people, easier counts)**
@@ -161,4 +162,90 @@
 
 - **P(sick | test +)** = sick & positive **÷** all positive = **99 / (99+45) = 99/144 ≈ 69%** (up from **10%** prior, but **not** **99%** — many **+** are still healthy).
 - Compare to lecture: with **P(Z)=0.1%**, the positive column is almost all **false positives**, so **P(Z|+)≈2%**.
+
+---
+
+## Week 2 — Lecture 3 — Random Variables, Distributions, and Joint Distributions
+
+- **Slides:** `Week 2/Lecture 03 Random Variables, Distributions, and Joint Distributions.pdf`
+- **Transcript:** `Week 2/Lecture 03 Transcript - Random Variables, Distributions, and Joint Distributions.pdf`
+- **OCW mirror (same content):** [Lecture 3 resource page](https://ocw.mit.edu/courses/14-310x-data-analysis-for-social-scientists-spring-2023/resources/mit14_310x_s23_week02_lec03_pdf/) — direct PDF: `mit14_310x_s23_week02_lec03.pdf`
+
+**Housekeeping / near-term schedule (lecture)**
+
+- Same week: **Tuesday** (Esther) — examples, data sources / gathering (e.g. web scraping), **histograms** and **kernel density** plots (ways to **estimate** distributions from data).
+- **Wednesday** — independence of random variables, conditional distributions, maybe more.
+- **Friday recitation** — mostly **R** tutorial; possible **probability hints** for the problem set depending on what it covers.
+
+**Random variables**
+
+- A **random variable** is a **real-valued function** whose **domain is the sample space** (e.g. sum of two dice, Curry’s makes in six attempts, count of veg toppings on a random pizza); formally **X : S → ℝ**.
+- Contrast (slide graphic): **P** assigns probabilities to **events** (subsets of **S**) and takes values in **[0, 1]**; **X** assigns a **number** to each outcome. **Probability on S** **induces the distribution** of **X**.
+
+**Discrete vs continuous**
+
+- **Discrete:** finite or **countably infinite** support (examples so far are discrete).
+- **Continuous:** can take any value in an interval (bounded or not); course will **use continuous a lot**, partly because many discrete situations are **well approximated** by continuous models, and because **math for functions of RVs** is often **simpler** in the continuous setup.
+
+**Discrete — probability function (PF)**
+
+- Start from a story → assign **P(X = x)** for each possible **x** → tabulate or plot; that function is the **PF** (also called PMF in many texts).
+- **Graph convention:** vertical segments under each mass point; each point is a **point mass**.
+
+**Hypergeometric — Area Four pizza (veg count)**
+
+- **X** = number of **vegetarian** toppings when you draw **n** toppings **without replacement** from **N** items with **K** “successes” (veg): **X ~ H(N, K, n)**. Support: **x** runs **0, 1, …** up to **min(K, n)** (cannot exceed **K** veg types or **n** draws).
+- PF uses the same counting structure as Lecture 2 (combinations); **0! = 1**; notation tweaked from Lecture 2 (e.g. **x** vs earlier labels; **n − x** for non-veg count in the formula). A fully pedantic PF includes **f_X(x) = 0** outside the support.
+- **Numerical example (slides):** fix **n = 3** draws. Then **P(X=0)=6/99**, **P(X=1)=36/99**, **P(X=2)=45/99**, **P(X=3)=12/99** (sums to 1). Probabilities depend on **n** (and **N, K**).
+
+**Binomial — Curry threes**
+
+- **X** = number of makes in **n** **independent** trials with same **p** = **P(make):** **X ~ B(n, p)**.
+- **Lecture instance:** **n = 6**, **p** consistent with Lecture 2 (~**0.44**); rounded PF: **P(0)≈.03**, **P(1)≈.15**, **P(2)≈.29**, **P(3)≈.30**, **P(4)≈.18**, **P(5)≈.06**, **P(6)≈.01**.
+- **p = 0.5** → symmetric PF; shape **foreshadows** the **normal** distribution (visual in slides).
+
+**PF properties (discrete)**
+
+- $f_X(x) = P(X = x)$.
+- $0 \le f_X(x_i) \le 1$; $\sum_i f_X(x_i) = 1$; for an event $A$, $P(X \in A) = \sum_{x_i \in A} f_X(x_i)$.
+
+**Continuous — probability density function (PDF)**
+
+- Usually given a **density** **f_X** (not built step-by-step from a verbal lattice like many discrete examples).
+- **X** is **continuous** if there exists **f_X ≥ 0** such that for any (nice) set $A$, $P(X \in A) = \int_A f_X(x)\,dx$.
+- **Properties:** $f_X(x) \ge 0$; $\int_{-\infty}^{\infty} f_X(x)\,dx = 1$; $P(a \le X \le b) = \int_a^b f_X(x)\,dx$.
+- **Not** like discrete mass: **P(X = x) = 0** for every **x**; **f_X(x)** is **not** “probability at x” and **can exceed 1** — only **areas** under the curve are probabilities.
+
+**Terminology**
+
+- “**Distribution** of **X**” is used loosely for either a **PF** or a **PDF**; notation and vocabulary **vary by source** — stay consistent within one problem.
+
+**Uniform**
+
+- **X ~ U[a, b]** on **[a, b]**: **f_X(x) = 1/(b−a)** on **[a, b]**, **0** otherwise.
+- Probability over **[c, d] ⊂ [a, b]** = **(d−c)/(b−a)** (length ratio; same as integrating the flat density).
+
+**Cumulative distribution function (CDF)**
+
+- **F_X(x) = P(X ≤ x)** — same idea for **discrete or continuous**.
+- **Properties:** **0 ≤ F_X(x) ≤ 1**; **non-decreasing**; limits **0** as **x → −∞**, **1** as **x → +∞**; **right-continuous**.
+- **Discrete:** **F** has **jumps** at mass points; **continuous:** **F** is continuous (typically).
+
+**Linking PF/PDF and CDF**
+
+- Same information, different form; each determines the other.
+- **Continuous case:** $F_X(x) = \int_{-\infty}^{x} f_X(t)\,dt$; where **F_X** is differentiable, $F_X'(x) = f_X(x)$ (slides: “**except possibly finitely many points**” caveats for corner cases).
+
+**Joint distributions**
+
+- Motivation: study **relationships** — e.g. rainfall & yield; express vs regular line lengths; **veg and non-veg counts** on a pizza; FX rate & exporter’s stock price.
+- **Continuous (X, Y):** joint **PDF** $f_{X,Y}(x,y)$ with $P((X,Y) \in A) = \iint_A f_{X,Y}(x,y)\,dx\,dy$; integrates to **1** over the plane; **a point or a curve** has probability **0**.
+- **Discrete analogue:** **f_{X,Y}(x,y) = P(X=x, Y=y)** (joint PF); slides focus definitions on continuous but idea parallels.
+
+**Worked joint example — headache meds**
+
+- One tablet **naproxen** (duration **X**) and one **acetaminophen** (**Y**), **independent**-looking joint density on **x, y ≥ 0**: **f_{X,Y}(x,y) = λ² e^{−λ(x+y)}**.
+- **Both active within 3 hours:** **P(X ≤ 3, Y ≤ 3) = (1 − e^{−3λ})²** (product structure from integrating over the rectangle).
+- **Sequential dosing:** take acetaminophen only **after** naproxen wears off → interest in **P(X + Y ≤ 3)** (integral over a **triangle**, not the rectangle; setup left as “details at home” on slides).
+- **New variable** **Z = X + Y** (total relief when taken in sequence): **F_Z(z) = P(Z ≤ z) = 1 − (1 + zλ)e^{−zλ}** for **z > 0**; **f_Z(z) = F_Z′(z) = λ² z e^{−zλ}** for **z > 0** (**Gamma**-type shape, **shape 2**, rate **λ**).
 

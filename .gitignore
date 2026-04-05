@@ -61,5 +61,5 @@
 *.img
 *.vmdk
 
-# Obsidian (local UI state)
-.obsidian/workspace.json
+# Obsidian (local UI state, plugins, graph — not shared)
+.obsidian/
