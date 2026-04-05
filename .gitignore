@@ -60,3 +60,6 @@
 *.iso
 *.img
 *.vmdk
+
+# Obsidian (local UI state)
+.obsidian/workspace.json
