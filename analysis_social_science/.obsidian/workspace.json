@@ -1,0 +1,217 @@
+{
+  "main": {
+    "id": "4533259a5e510fbb",
+    "type": "split",
+    "children": [
+      {
+        "id": "3c8e954775879ef5",
+        "type": "tabs",
+        "dimension": 59.454314720812185,
+        "children": [
+          {
+            "id": "afa5392718043dd8",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "Lecture 1 - Intro/mit14_310x_s23_week01_lec01 (1).pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "mit14_310x_s23_week01_lec01 (1)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "355ac296e4df108c",
+        "type": "tabs",
+        "dimension": 40.545685279187815,
+        "children": [
+          {
+            "id": "69f118f8290b9fb2",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c32b8bd7117e1d21",
+    "type": "split",
+    "children": [
+      {
+        "id": "ab7b170d4d15ca24",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ba87b5dc5206e085",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "849126b97ece1238",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "26a2ea4340a6be30",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "53d32d514747533b",
+    "type": "split",
+    "children": [
+      {
+        "id": "bad46bb4d0ee4ebf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bae6e0e39979ba71",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Lecture 1 - Intro/mit14_310x_s23_week01_lec01 (1).pdf",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for mit14_310x_s23_week01_lec01 (1)"
+            }
+          },
+          {
+            "id": "ddafa2113a8e53e6",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Lecture 1 - Intro/mit14_310x_s23_week01_lec01 (1).pdf",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from mit14_310x_s23_week01_lec01 (1)"
+            }
+          },
+          {
+            "id": "00659e722bbd814c",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "34a939892af70243",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "7aa7b73a4ebb6d56",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Lecture 1 - Intro/mit14_310x_s23_week01_lec01 (1).pdf",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of mit14_310x_s23_week01_lec01 (1)"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "afa5392718043dd8",
+  "lastOpenFiles": [
+    "Lecture 1 - Intro/1ssraL2tY8lXkcOElwGxnePvf-ZTGpEZ-_transcript.pdf",
+    "Lecture 1 - Intro/Week01_Lecture01_Summary.md",
+    "Lecture_Summaries.md",
+    "Lecture 1 - Intro/~~$mit14_310x_s23_homework01.pdf",
+    "LLM Instruction.md",
+    "Lecture 1 - Intro/_extract.txt",
+    "Welcome.md",
+    "Lecture 1 - Intro/mit14_310x_s23_homework01.pdf",
+    "Lecture 1/Unconfirmed 292511.crdownload",
+    "Lecture 1 - Intro/mit14_310x_s23_week01_lec01 (1).pdf",
+    "Lecture 1/Unconfirmed 718949.crdownload",
+    "Lecture 1 - Intro"
+  ]
+}

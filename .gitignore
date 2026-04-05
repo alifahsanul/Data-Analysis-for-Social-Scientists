@@ -1,0 +1,62 @@
+# Documents (often large)
+*.pdf
+
+# Video / audio
+*.mp4
+*.m4v
+*.mov
+*.avi
+*.mkv
+*.webm
+*.wmv
+*.flv
+*.mp3
+*.wav
+*.flac
+*.m4a
+
+# Archives
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.bz2
+*.xz
+*.zst
+
+# Large / binary data
+*.parquet
+*.feather
+*.arrow
+*.h5
+*.hdf5
+*.nc
+*.netcdf
+*.sqlite
+*.sqlite3
+*.db
+*.RData
+*.rds
+*.dta
+*.sav
+*.mat
+
+# Office binaries (often large)
+*.xlsx
+*.xls
+*.pptx
+*.ppt
+*.docx
+*.doc
+
+# Images (high-res / project files)
+*.tif
+*.tiff
+*.psd
+*.heic
+
+# Disk / VM images
+*.iso
+*.img
+*.vmdk
