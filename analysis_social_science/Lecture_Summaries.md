@@ -67,6 +67,7 @@
 
 - **P(A)=n(A)/n(S)** when outcomes are equally likely.
 - Multiplication rule; **with vs without replacement** (e.g. license plates).
+- **Supplementary video (permutations & combinations):** [All of Combinatorics in 30 Minutes](https://www.youtube.com/watch?v=VJkvPTY6kZw) — extra walkthrough alongside the lecture.
 
 **Permutations — order matters**
 
@@ -104,17 +105,32 @@
   - **Event (one veg, one non) — step 1 (ordered):** **veg** then **non** → **6×5 = 30**; **non** then **veg** → **5×6 = 30** → **60** ordered mixed pairs.
   - **Event — step 2:** each **mixed** unordered pair **{veg, non}** still appears in **two** orders → **60/2 = 30** favorable outcomes (same as **6×5** if you think “pick **which** veg × **which** non” once).
   - **Probability:** **P = 30/55**. (Lecture: this story later motivates the **hypergeometric** distribution.)
+- **Lecture tie-in — faculty offices (Esther & Sara adjacent):**
+  - **Goal:** A **probability** — **40** distinct people are assigned at random to **40** offices in a **fixed row** (one person per office). You want **P(Esther and Sara end up in neighboring offices)**.
+  - **Sample space — what one outcome is:** A complete **assignment** “**who** sits in **office 1**, **office 2**, …, **office 40**.” Offices are **labeled**; **people** are **distinct**. Every assignment is **equally likely** if all **40!** orderings of people into the row are equally likely (**40** choices for office **1**, **39** for office **2**, … → **40!** outcomes — same **permutation** logic as the license plate slots, but here you use **all 40** symbols).
+  - **Denominator:** **n(S) = 40!**.
+  - **Event — the “block” idea:** Whenever Esther and Sara are **next to each other**, you can picture them as **one glued unit** (a **block**) that occupies **two side-by-side** offices. The block can read **Esther–Sara** or **Sara–Esther** along the row → **2** internal orders (**2** ways to orient the pair inside the block).
+  - **Numerator — count favorable assignments:** Treat **{block}** + **the other 38 people** as **39 objects** to lay out in order along the row. Each ordering of these **39** objects pins down **exactly one** full seating of all **40** people (the block always fills **two consecutive** spots as one chunk). There are **39!** ways to order the **39** objects, and **×2** for **ES** vs **SE** inside the block → **n(A) = 2×39!**.
+  - **Same kind of outcome as the denominator:** **n(A)** and **n(S)** both count **complete** assignments — **every** person in **some** office — so the ratio **n(A)/n(S)** is a real probability for “random full seating.” A count that only fixes Esther and Sara (e.g. **39×2** for **which adjacent pair** × **ES/SE**) is **not** enough: it leaves the **other 38** people unspecified.
+  - **Why every ordering of the others matters:** For **each** valid placement/order of Esther and Sara, there are **38!** ways to put the **remaining 38** faculty in the **remaining 38** offices. Each of those is a **different** outcome (different people in different rooms), so they all belong in **n(A)**. Equivalently: **39×2×38! = 2×39!** (because **39×38! = 39!**).
+  - **Probability:** **P(A) = (2×39!)/40!**. Since **40! = 40×39!**, this simplifies to **2/40 = 1/20**. (If you **condition** on Esther’s office: **end** offices give Sara only **1** adjacent slot → **1/39**; **interior** offices give **2** slots → **2/39**; weighting by Esther’s position still averages to **2/40** — same answer as the **block** count.)
 
 **Other counting examples (shorter)**
 
 - **Dice:** ordered outcomes (permutation-style product **6×6** for two dice).
-- **Faculty offices:** Esther & Sara **next to each other** in a line of **40** → **2×39!/40!** (ordering argument with a “block”).
 
 **Independence**
 
 - **P(A∩B)=P(A)P(B)** — learning **B** doesn’t change odds of **A**.
 - If **A,B** independent → **A** and **Bᶜ** independent.
-- **Steph Curry** shots → **binomial** preview; **P(at least one) = 1 − P(none)**.
+- **Lecture tie-in — Steph Curry (binomial preview):**
+  - **Goal:** **P(exactly 3 makes** and **3 misses in 6 attempts)** — **3** successes in **6** **independent** tries (**Bernoulli trials**).
+  - **Setup (lecture numbers):** **P(make) = p = 0.44**; **P(miss) = q = 1 − p = 0.56**. Independence means probabilities **multiply** along a sequence of outcomes.
+  - **Step 1 — one specific sequence:** e.g. **Make-Make-Make-Miss-Miss-Miss** (**MMMXXX**). **P(that sequence) = p³q³ = 0.44³ × 0.56³ ≈ 0.01496** (≈ **0.015** rounded).
+  - **Step 2 — how many sequences:** Any ordering with **exactly 3** makes in **6** ordered slots uses **three** factors **p** and **three** factors **q**, so each such sequence has the **same** probability **p³q³**. Count orderings: **(6 choose 3)** = **6!/(3!(6−3)!)** = **(6×5×4)/(3×2×1)** = **20** (e.g. **MXMXMX**, **XXXMMM**, …).
+  - **Step 3 — total:** **P(exactly 3 makes)** = **20 × 0.015 = 0.30** — about **30%** for a **3-for-6** line under these assumptions.
+  - **General form (binomial PMF):** **P(exactly k successes in n trials)** = **(n choose k) p^k (1−p)^(n−k)** when trials are **independent** with the same **p**.
+- **Related (complement):** **P(at least one make in n tries) = 1 − P(all misses) = 1 − q^n** — same “multiply independent probabilities” idea.
 
 **Conditional probability & partitions**
 
