@@ -187,16 +187,33 @@
 - **Discrete:** finite or **countably infinite** support (examples so far are discrete).
 - **Continuous:** can take any value in an interval (bounded or not); course will **use continuous a lot**, partly because many discrete situations are **well approximated** by continuous models, and because **math for functions of RVs** is often **simpler** in the continuous setup.
 
-**Discrete — probability function (PF)**
+**Discrete — probability mass function (PMF, also called PF)**
 
-- Start from a story → assign **P(X = x)** for each possible **x** → tabulate or plot; that function is the **PF** (also called PMF in many texts).
+- Start from a story → assign **P(X = x)** for each possible **x** → tabulate or plot; that function is the **PMF** (**P**robability **M**ass **F**unction; often just called **PF** in these notes).
 - **Graph convention:** vertical segments under each mass point; each point is a **point mass**.
 
 **Hypergeometric — Area Four pizza (veg count)**
 
-- **X** = number of **vegetarian** toppings when you draw **n** toppings **without replacement** from **N** items with **K** “successes” (veg): **X ~ H(N, K, n)**. Support: **x** runs **0, 1, …** up to **min(K, n)** (cannot exceed **K** veg types or **n** draws).
-- PF uses the same counting structure as Lecture 2 (combinations); **0! = 1**; notation tweaked from Lecture 2 (e.g. **x** vs earlier labels; **n − x** for non-veg count in the formula). A fully pedantic PF includes **f_X(x) = 0** outside the support.
-- **Numerical example (slides):** fix **n = 3** draws. Then **P(X=0)=6/99**, **P(X=1)=36/99**, **P(X=2)=45/99**, **P(X=3)=12/99** (sums to 1). Probabilities depend on **n** (and **N, K**).
+- **Story:** You pick **n** distinct toppings **without replacement** from the **Area Four** “extra toppings” list. **X** = how many of your **n** picks are **vegetarian**.
+- **Counts from the menu (lecture):** **N = 11** toppings total — **K = 6** vegetarian, **N − K = 5** non-vegetarian (meat/fish). **Veg (6):** e.g. caramelized onions, pickled banana peppers, mushrooms, green olives, arugula, 2 farm eggs. **Non-veg (5):** e.g. sopressata, sausage, bacon, chicken, marinated white anchovies.
+- **Model:** **X ~ H(N, K, n)** with **N = 11**, **K = 6**. Support: **x = 0, 1, …, min(K, n)** (you cannot draw more veg toppings than exist or than **n**).
+- **PF (same as Lecture 2 counting):** choose **x** veg from **6**, and **n − x** non-veg from **5**, divided by all ways to choose **n** from **11**:
+  - $P(X = x) = \dfrac{\binom{6}{x}\binom{5}{n-x}}{\binom{11}{n}}$ when **0 ≤ x ≤ min(6, n)** and **n − x ≤ 5**; **0** otherwise. **0! = 1** so **x = 0** is fine.
+- **Why probabilities depend on n:** the denominator **C(11, n)** and the non-veg factor **C(5, n−x)** both change when you change **n** (e.g. **n = 2** in Lecture 2’s “mixed pizza” problem vs **n = 3** below).
+
+**PMF for n = 3** (slide numbers — replaces the plotted PF)
+
+
+| **x** (veg count) | **P(X = x)** | **≈ decimal** |
+| ----------------- | ------------ | ------------- |
+| 0                 | 6/99         | ≈ 0.061       |
+| 1                 | 36/99        | ≈ 0.364       |
+| 2                 | 45/99        | ≈ 0.455       |
+| 3                 | 12/99        | ≈ 0.121       |
+
+
+- **Check:** **6 + 36 + 45 + 12 = 99** → probabilities sum to **99/99 = 1**. Same PMF as **10/165, 60/165, 75/165, 20/165** (numerators **C(6,x)C(5,3−x)** for **x = 0,…,3**).
+- Notation on slides may use **x** for the veg count and **n** for draws; a fully pedantic PF sets **f_X(x) = 0** off the support.
 
 **Binomial — Curry threes**
 
@@ -212,9 +229,10 @@
 **Continuous — probability density function (PDF)**
 
 - Usually given a **density** **f_X** (not built step-by-step from a verbal lattice like many discrete examples).
-- **X** is **continuous** if there exists **f_X ≥ 0** such that for any (nice) set $A$, $P(X \in A) = \int_A f_X(x)\,dx$.
-- **Properties:** $f_X(x) \ge 0$; $\int_{-\infty}^{\infty} f_X(x)\,dx = 1$; $P(a \le X \le b) = \int_a^b f_X(x)\,dx$.
+- **X** is **continuous** if there exists **f_X ≥ 0** such that for any (nice) set $A$, $P(X \in A) = \int_A f_X(x)dx$.
+- **Properties:** $f_X(x) \ge 0$; $\int_{-\infty}^{\infty} f_X(x)dx = 1$; $P(a \le X \le b) = \int_a^b f_X(x)dx$.
 - **Not** like discrete mass: **P(X = x) = 0** for every **x**; **f_X(x)** is **not** “probability at x” and **can exceed 1** — only **areas** under the curve are probabilities.
+- **PMF vs PDF (quick diff):** **PMF** = exact-point probabilities for **discrete** outcomes, $P(X=x)$; **PDF** = density for **continuous** outcomes, where probabilities come from **integrals over intervals** (area under curve), not from a point value.
 
 **Terminology**
 
@@ -234,12 +252,12 @@
 **Linking PF/PDF and CDF**
 
 - Same information, different form; each determines the other.
-- **Continuous case:** $F_X(x) = \int_{-\infty}^{x} f_X(t)\,dt$; where **F_X** is differentiable, $F_X'(x) = f_X(x)$ (slides: “**except possibly finitely many points**” caveats for corner cases).
+- **Continuous case:** $F_X(x) = \int_{-\infty}^{x} f_X(t)dt$; where **F_X** is differentiable, $F_X'(x) = f_X(x)$ (slides: “**except possibly finitely many points**” caveats for corner cases).
 
 **Joint distributions**
 
 - Motivation: study **relationships** — e.g. rainfall & yield; express vs regular line lengths; **veg and non-veg counts** on a pizza; FX rate & exporter’s stock price.
-- **Continuous (X, Y):** joint **PDF** $f_{X,Y}(x,y)$ with $P((X,Y) \in A) = \iint_A f_{X,Y}(x,y)\,dx\,dy$; integrates to **1** over the plane; **a point or a curve** has probability **0**.
+- **Continuous (X, Y):** joint **PDF** $f_{X,Y}(x,y)$ with $P((X,Y) \in A) = \iint_A f_{X,Y}(x,y)dxdy$; integrates to **1** over the plane; **a point or a curve** has probability **0**.
 - **Discrete analogue:** **f_{X,Y}(x,y) = P(X=x, Y=y)** (joint PF); slides focus definitions on continuous but idea parallels.
 
 **Worked joint example — headache meds**
@@ -249,3 +267,86 @@
 - **Sequential dosing:** take acetaminophen only **after** naproxen wears off → interest in **P(X + Y ≤ 3)** (integral over a **triangle**, not the rectangle; setup left as “details at home” on slides).
 - **New variable** **Z = X + Y** (total relief when taken in sequence): **F_Z(z) = P(Z ≤ z) = 1 − (1 + zλ)e^{−zλ}** for **z > 0**; **f_Z(z) = F_Z′(z) = λ² z e^{−zλ}** for **z > 0** (**Gamma**-type shape, **shape 2**, rate **λ**).
 
+---
+
+## Week 2 — Lecture 4 — Gathering and Collecting Data
+
+- **Slides:** `Week 2/Lecture 04 - Gathering and Collecting Data.pdf`
+- **Transcript:** `Week 2/Lecture 04 Transcript - Gathering and Collecting Data.pdf`
+
+**Main frame**
+
+- Three practical routes: **existing data libraries**, **extracting from the internet** (API/scraping), and **collecting your own data**.
+- Practical advice: start from the **question**, then search for the best feasible data source (free, purchasable, restricted-access, or self-collected).
+
+**Existing data sources (examples from lecture)**
+
+- Public/data repositories: **Data.gov**, **IPUMS** (US + international), **ICPSR**, **Harvard Dataverse**, **Amazon public datasets**.
+- International survey sources: **DHS**, **World Bank LSMS**, **RAND** panels.
+- Research replication archives: **J-PAL/IPA** and **AEA** journal data posting requirements.
+- Data quality reminder: even trusted datasets need scrutiny (question wording, recall error, measurement validity).
+
+**Cross-sections, panels, and quality checks**
+
+- **Repeated cross-section:** resample comparable units over time (not the same individuals/households).
+- **Panel data:** track the **same unit** over time (household/farm/village/state, etc.).
+- **Back-checks** are quality control re-visits on a subset of questions; they are different from follow-up waves.
+
+**Internet data: API vs scraping**
+
+- Prefer a platform **API** when available (structured access, terms/limits).
+- If no API or insufficient API, scrape webpage structure (e.g., parse classes/fields into a table).
+- Tools highlighted: Python (**requests**, **BeautifulSoup**), and in R (**rvest**, `readHTMLTable` for simple tables).
+- Constraints are common: rate limits, anti-bot barriers, changing page structure, and engineering overhead.
+
+**Collecting your own data**
+
+- Feasible options: online surveys, app-based passive collection (with consent), field questionnaires, dedicated survey teams.
+- Recommended workflow: funding/resources → data management/security plan → IRB/COUHES approval → instrument design/pilot → implementation.
+- Lecture emphasis: modern digital collection (tablets/phones) generally outperforms paper on cost + data quality workflows.
+
+**Ethics and human subjects**
+
+- Human-subject research is governed by IRB frameworks (Belmont principles: **respect for persons, beneficence, justice**).
+- Distinction stressed in lecture: firms can often run product experiments under user agreements; **research intended for generalizable knowledge/publication** triggers stricter human-subject requirements.
+
+**Transition to next lecture content**
+
+- Lecture closes by starting **EDA for distributions**: histograms, kernel density estimates, bandwidth trade-off (variance vs bias), and plotting/diagnostics in R.
+
+---
+
+## Week 3 — Lecture 05 — Summarizing and Describing Data
+
+- **Slides:** `Week 3/Lecture 05 Summarizing and Describing Data.pdf`
+- **Transcript:** `Week 3/Lecture 05 Transcript Summarizing and Describing Data.pdf`
+
+**EDA workflow (lecture focus)**
+
+- Start by plotting raw distributions before modeling assumptions.
+- Main tools: **histograms**, **kernel density estimates**, and **CDF plots**.
+- In R/`ggplot2`, default settings are a useful baseline, then adjust deliberately.
+
+**Histograms and kernel density**
+
+- Histograms are bin-based approximations; shape can change with bin width.
+- Kernel density is a smooth, non-parametric estimate using weighted local information.
+- Choice of kernel (e.g., Epanechnikov vs Gaussian) usually matters less than **bandwidth**.
+- Bandwidth trade-off: too small -> noisy/high variance; too large -> oversmoothed/high bias.
+- Practical guidance: start with R default bandwidth (`nrd0`), then check sensitivity.
+
+**Comparing distributions: PDF vs CDF**
+
+- PDF/kernel is better for seeing shape: mode, skewness, tail thickness.
+- CDF is better for probability comparisons because vertical distances are easier to compare than areas.
+- Visual first-order stochastic dominance: if one CDF is always below another, it tends to have larger values across thresholds (example: US vs Bihar female heights).
+
+**Bivariate and joint distributions**
+
+- Separate 1D plots can hide structure when variables are related (e.g., shot location on a basketball court).
+- Use joint displays (2D histogram/heatmap/3D surface) to reveal clustering patterns (e.g., bunching near 3-point line and near basket).
+
+**Data-quality caution from top-income example**
+
+- Administrative microdata can be **top-coded** (privacy protection), creating artificial mass points in upper tails.
+- For top-income shares over time, lecture highlights using tax tabulations plus a Pareto-tail approximation (Piketty-Saez style) to recover top-share statistics.

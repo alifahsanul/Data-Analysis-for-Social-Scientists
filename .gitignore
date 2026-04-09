@@ -63,3 +63,11 @@
 
 # Obsidian (local UI state, plugins, graph — not shared)
 .obsidian/
+
+# Google Workspace shortcut files
+*.gsheet
+*.gdoc
+*.gslides
+*.gform
+*.gdraw
+*.gmap
