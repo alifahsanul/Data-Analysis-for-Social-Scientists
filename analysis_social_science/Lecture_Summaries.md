@@ -350,3 +350,123 @@
 
 - Administrative microdata can be **top-coded** (privacy protection), creating artificial mass points in upper tails.
 - For top-income shares over time, lecture highlights using tax tabulations plus a Pareto-tail approximation (Piketty-Saez style) to recover top-share statistics.
+
+---
+
+## Week 3 — Lecture 06 — Joint, Marginal, and Conditional Distributions
+
+- **Slides:** `Week 3/Lecture 06 Joint, Marginal, and Conditional Distributions.pdf`
+- **Transcript:** `Week 3/Lecture 06 Transcript Joint, Marginal, and Conditional Distributions.pdf`
+- **OCW mirror (same content):** [Week 3 — Lecture 6](https://ocw.mit.edu/courses/14-310x-data-analysis-for-social-scientists-spring-2023/pages/week-3/) — slides resource: [Lecture 6 PDF](https://ocw.mit.edu/courses/14-310x-data-analysis-for-social-scientists-spring-2023/resources/mit14_310x_s23_week03_lec06_pdf/); transcript: `1pBw6Y3O7_Y19n4fJ76a8Wniwg8eiOcqa_transcript.pdf` on that page
+
+**Framing**
+
+- Builds on the joint-PDF material from earlier weeks; works a **continuous** joint example (DeGroot & Schervish–style) with **3D pictures** of the surface over the support, then **marginals**, **independence**, and **conditionals** (discrete tennis PF + same continuous example).
+- **Marginals alone do not determine the joint:** a joint distribution encodes (i) how **X** behaves, (ii) how **Y** behaves, and (iii) how they **relate** — you need (iii) to go from marginals back to a joint law.
+
+**Continuous joint PDF — support, constant c, region probability**
+
+- **Model:** $f_{X,Y}(x,y) = c\,x^2 y$ when **x² ≤ y ≤ 1**, and **0** otherwise (so **x ∈ [−1, 1]** from the inequalities).
+- **Support:** region in the **(x, y)**-plane between **y = x²** and **y = 1** (draw this first; integrate only where density is positive).
+- **Normalize:** $\iint_{\text{support}} c\,x^2 y\,dy\,dx = 1$ → inner integral over **y** from **x²** to **1**, outer **x** from **−1** to **1** gives **(4/21)c = 1**, so **c = 21/4**.
+- **P(X > Y):** intersect **{x > y}** with the support → integrate over the **sliver** where **y** runs from **x²** to **x** and **x** from **0** to **1** → **P = 3/20** (lecture’s limits).
+
+**Marginal distributions**
+
+- **Discrete:** $f_X(x) = \sum_y f_{X,Y}(x,y)$ — fix **x**, add all **y** (same idea as “add along a row” in a table).
+- **Continuous:** $f_X(x) = \int f_{X,Y}(x,y)\,dy$ (integrate out **y** over the **y**-slice of the support for that **x**); analogously $f_Y(y) = \int f_{X,Y}(x,y)\,dx$.
+- **From the lecture’s continuous example:** for **x ∈ [−1, 1]**, $f_X(x) = \int_{x^2}^{1} \frac{21}{4} x^2 y\,dy = \frac{21}{8} x^2 (1 - x^4)$ (slides use an **indicator** on **x** for pedantry). For **y ∈ [0, 1]**, $f_Y(y) = \int_{-\sqrt{y}}^{\sqrt{y}} \frac{21}{4} x^2 y\,dx = \frac{7}{2} y^{5/2}$.
+- **Tennis (discrete joint PF):** **X** and **Y** = unforced errors per game for the two players; correlation in play quality concentrates mass near **x ≈ y** (few joint mass on “one very high, one very low”). After summing out the other variable, the **marginal** laws for **X** and **Y** **coincide** in the toy table (e.g. **P(X = 0) = 3/8**, **P(X = 1) = 5/16**, … — illustrative numbers from the lecture, not “real” match data).
+
+**Independence of random variables**
+
+- **Definition (events-style):** **P(X ∈ A, Y ∈ B) = P(X ∈ A)P(Y ∈ B)** for **all** (nice) **A, B** — hard to check directly.
+- **Usable equivalents:** joint **CDF** factors as product of marginals; with densities, **joint PDF = f_X(x) f_Y(y)** **iff** independent.
+- **Continuous shortcut:** if a joint PDF exists, independence **iff** the density **factors** as **g(x) h(y)** with **g, h ≥ 0** (functions of **x** and **y** alone) — **but** the **support** must allow factorization too: if the region where **f > 0** forces **y** to depend on **x** (e.g. **x² ≤ y ≤ 1**), variables are **not** independent even when **c x²y** looks multiplicative on the formulas alone.
+- **Headache-pill example (earlier lecture):** **f_{X,Y}(x,y) = λ² e^{−λ(x+y)}** on **x, y ≥ 0** **does** factor → **X** and **Y** independent (same marginal shape for each drug’s duration).
+- **Tennis table:** some **(x, y)** regions have **zero** joint probability while the **product of marginals** is **positive** → violates independence.
+- **Discrete tables:** independence **iff** **every row** is proportional to every other row **iff** **every column** is proportional to every other column.
+
+**Conditional distributions**
+
+- **Discrete:** $P(Y=y \mid X=x) = f_{X,Y}(x,y) / f_X(x)$ (when **f_X(x) > 0**). A **slice** of the joint table at fixed **x** is **not** yet a PMF — **renormalize** so probabilities sum to **1** (lecture: condition on **Y = 2**, use **P(Y = 2) = 5/32** from the **marginal of Y** to scale the slice).
+- **Continuous:** $f_{Y \mid X}(y \mid x) = f_{X,Y}(x,y) / f_X(x)$ for **x** with **f_X(x) > 0**; expression can involve both **x** and **y**, but **plug in** a fixed **x** to get a **density in y** only (lecture: **x = 1/2** → **y** from **1/4** to **1**, gives **f_{Y \mid X}(y \mid 1/2) ∝ y**, normalized to **(32/15) y** on that interval).
+- **Link to independence:** **f_{Y \mid X} = f_Y** (conditional equals marginal) **iff** **X** and **Y** are independent — conditioning carries **no** information about the other variable.
+
+**Bridge to next topic**
+
+- **Statistics** are **functions of random variables** (e.g. sample mean); next lectures develop **distributions of transforms** **h(X)** or **h(X₁,…,X_n)**. Preview: if **Y = |2X + 3|**, track how scaling **stretches** the PDF and **|·|** **folds** mass from negative **x** to positive support (area still **1**).
+
+---
+
+## Week 4 — Lecture 07 — Functions of Random Variables
+
+- **Slides:** `Week 4/Lecture 07 Slides - Functions of Random Variables.pdf`
+- **Transcript:** `Week 4/Lecture 07 Transcript - Functions of Random Variables.pdf`
+
+**Framing and method**
+
+- Goal: given a known distribution for **X**, derive the distribution of **Y = h(X)**.
+- Method emphasized in lecture: (1) find **CDF** via $F_Y(y)=P(h(X)\le y)$ by integrating over the correct region; (2) differentiate to get **PDF** when **Y** is continuous.
+- Which derivation tricks are available depends on context: discrete vs continuous, one variable vs vector, invertible vs non-invertible transformation.
+
+**Warm-up example: $Y=X^2$ with $X \sim U[-1,1]$**
+
+- Support mapping: **X in [-1,1]** implies **Y in [0,1]**.
+- CDF steps: $F_Y(y)=P(X^2\le y)=P(-\sqrt y\le X\le \sqrt y)=\int_{-\sqrt y}^{\sqrt y} \frac12 dx=\sqrt y$, for $0\le y\le1$.
+- Piecewise CDF: $F_Y(y)=0$ for $y<0$, $F_Y(y)=\sqrt y$ for $0\le y\le1$, $F_Y(y)=1$ for $y>1$.
+- PDF: $f_Y(y)=\frac{1}{2\sqrt y}$ on $(0,1)$, and $0$ otherwise.
+- Intuition: squaring “folds” negative and positive **X** onto the same positive **Y**, creating high density near 0.
+
+**Important example 1: linear transformation**
+
+- If **Y = aX + b** with $a\neq0$, CDF algebra splits by sign of $a$ (inequality direction flips when $a<0$).
+- Final density formula (both cases compactly):  
+  $f_Y(y)=\frac{1}{|a|}f_X\left(\frac{y-b}{a}\right)$.
+- Interpretation: translation by $b$ shifts the distribution; scaling by $a$ stretches/compresses by $|a|$.
+ 
+Examples (concrete — Curry shot feet → meters):
+
+- Real-world setup: suppose we model Steph Curry's shot distance $X$ measured in feet. As a simple parametric example, let
+
+  $X \sim N(23, 5^2)$  (mean 23 ft, SD 5 ft)
+
+  (these numbers are illustrative — think of 23 ft as a typical 3-point/long-two distance and 5 ft as a plausible spread).
+
+- Convert to meters with the linear transform $Y = aX + b$ where $a = 0.3048$ (1 ft = 0.3048 m) and $b = 0$. Then
+
+  $Y = 0.3048\,X \Rightarrow Y \sim N(23\times 0.3048,\ (5\times 0.3048)^2) = N(7.0104,\ 1.524^2)$
+
+  So Curry's shot distance is about 7.01 meters on average with SD $\approx 1.524$ m.
+
+- PDF relationship (numeric): the general formula $f_Y(y) = \frac{1}{|a|} f_X\!\left(\frac{y-b}{a}\right)$ becomes here
+
+  $f_Y(y) = \frac{1}{0.3048} f_X\!\left(\frac{y}{0.3048}\right) \approx 3.28084\, f_X(3.28084\, y).$
+
+  Intuition: converting feet → meters compresses distances ($a<1$), which reduces the SD and stretches the density vertically by $1/a$ so areas remain probabilities.
+
+**Important example 2: probability integral transform**
+
+- If **X** is continuous and $Y=F_X(X)$, then $Y\in[0,1]$ and $F_Y(y)=y$ on $[0,1]$.
+- Therefore $Y\sim U[0,1]$: transforming a continuous RV by its own CDF yields uniform draws.
+- Reverse direction: if $U\sim U[0,1]$, then $F^{-1}(U)$ has CDF $F$ (under standard regularity conditions).
+- Practical use in simulation: many RNGs provide uniform pseudo-random numbers, then inverse-CDF transforms generate draws from target distributions (exponential, beta, etc.).
+
+**Important example 3: convolution (sum of independent RVs)**
+
+- In probability, convolution refers to the distribution of a sum of independent RVs.
+- For independent continuous **X, Y** and $Z=X+Y$, joint density is $f_{X,Y}(x,y)=f_X(x)f_Y(y)$.
+- CDF route: $F_Z(z)=P(X+Y\le z)=\int_{-\infty}^{\infty}\int_{-\infty}^{z-y} f_X(x)f_Y(y)\,dx\,dy$.
+- Differentiate to get convolution formula:  
+  $f_Z(z)=\int_{-\infty}^{\infty} f_X(z-y)f_Y(y)\,dy$.
+- Generalizes naturally to sums of $N$ independent RVs and linear combinations.
+
+**Important example 4: order statistics**
+
+- Setup: $X_1,\dots,X_n$ i.i.d. continuous; define max $Y_n=\max\{X_1,\dots,X_n\}$ (the $n$-th order statistic).
+- CDF of max: $F_{Y_n}(y)=P(X_1\le y,\dots,X_n\le y)=[F_X(y)]^n$.
+- PDF of max: $f_{Y_n}(y)=n[F_X(y)]^{n-1}f_X(y)$.
+- For min $Y_1=\min\{X_1,\dots,X_n\}$: $f_{Y_1}(y)=n[1-F_X(y)]^{n-1}f_X(y)$.
+- Example with $X_i\sim U[0,1]$, $n=5$: max has $f(y)=5y^4$, min has $f(y)=5(1-y)^4$, both on $[0,1]$.
+- As $n$ grows: min mass concentrates near 0 and max mass near 1 (in the limit, point-mass behavior at edges).
+

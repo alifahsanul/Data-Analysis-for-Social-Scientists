@@ -1,0 +1,16 @@
+
+---
+description: MIT OCW data analysis course — learning workspace (not a shipping codebase)
+---
+
+# Workspace context
+
+This folder is for **learning**, not a production coding project.
+
+- **Course:** [Data Analysis for Social Scientists — 14.310x, Spring 2023 (MIT OCW)](https://ocw.mit.edu/courses/14-310x-data-analysis-for-social-scientists-spring-2023/)
+- The user is **self-studying** (not enrolled as a student); they are learning data analysis from the free online materials.
+
+When helping here, prioritize clear explanations, course-aligned statistics and data analysis, and concise answers. Avoid treating the repo like a large software product unless the user asks for that.
+
+- **Markdown style:** Prefer **bullet lists** (and short bullets) over long paragraphs when writing or editing `.md` files in this workspace, unless the user asks for prose or a specific format.
+
