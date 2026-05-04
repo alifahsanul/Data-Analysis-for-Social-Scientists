@@ -450,7 +450,7 @@ Examples (concrete — Curry shot feet → meters):
 - If **X** is continuous and $Y=F_X(X)$, then $Y\in[0,1]$ and $F_Y(y)=y$ on $[0,1]$.
 - Therefore $Y\sim U[0,1]$: transforming a continuous RV by its own CDF yields uniform draws.
 - Reverse direction: if $U\sim U[0,1]$, then $F^{-1}(U)$ has CDF $F$ (under standard regularity conditions).
-- Practical use in simulation: many RNGs provide uniform pseudo-random numbers, then inverse-CDF transforms generate draws from target distributions (exponential, beta, etc.).
+- Practical use in simulation: many RNGs (random number generators) provide uniform pseudo-random numbers, then inverse-CDF transforms generate draws from target distributions (exponential, beta, etc.).
 
 **Important example 3: convolution (sum of independent RVs)**
 
@@ -469,4 +469,171 @@ Examples (concrete — Curry shot feet → meters):
 - For min $Y_1=\min\{X_1,\dots,X_n\}$: $f_{Y_1}(y)=n[1-F_X(y)]^{n-1}f_X(y)$.
 - Example with $X_i\sim U[0,1]$, $n=5$: max has $f(y)=5y^4$, min has $f(y)=5(1-y)^4$, both on $[0,1]$.
 - As $n$ grows: min mass concentrates near 0 and max mass near 1 (in the limit, point-mass behavior at edges).
+
+---
+
+## Week 4 — Lecture 08 — Moments of Distribution
+
+**Why "moments"?**
+
+- **Etymology:** Term comes from physics/mechanics — just as a physical moment (torque) involves a quantity weighted by distance from a reference point, a **statistical moment** involves values weighted by probability.
+- **Geometric analogy:** If you imagine the PDF as **physical mass density** on a line, different moments capture key properties: balance point (**mean**), spread (**variance**), skewness (**third moment**), tail thickness (**kurtosis**).
+- **Practical purpose:** Rather than carrying around the entire PDF, use moments to **summarize** key features of a distribution.
+
+---
+
+**Opening example: probability integral transform applied**
+
+- **Setup:** $X \sim U[0,1]$ and function $Y = -\log(X)/\lambda$
+- **Induced support:** **Y** takes non-negative real values (since log(0) undefined but probability at any single point is 0)
+- **CDF derivation:**
+  - $F_Y(y) = P(Y \le y) = P(-\log(X)/\lambda \le y) = P(\log(X) \ge -\lambda y) = P(X \ge e^{-\lambda y})$
+  - Since $X \sim U[0,1]$: $P(X \ge e^{-\lambda y}) = 1 - e^{-\lambda y}$ for $y \ge 0$
+- **PDF:** $f_Y(y) = \frac{d}{dy}(1 - e^{-\lambda y}) = \lambda e^{-\lambda y}$ for $y \ge 0$
+- **Result:** This is the **exponential distribution** with rate **λ**
+- **Key insight:** This relates back to the **probability integral transform** — different functions **Y = h(X)** can produce the same distribution (e.g., $Y = -\log(X)/\lambda$ and $Y = -\log(1-X)/\lambda$ both yield exponential because $X$ and $1-X$ have the same $U[0,1]$ distribution)
+
+---
+
+**Moments: Summarizing distributions**
+
+- PDFs contain a lot of information, but sometimes we only care about certain summary features: **where centered**, **where peaks**, **spread**, **symmetry**, **tail thickness**.
+- **Moments** provide a way to summarize salient features of a distribution.
+
+**Three location measures**
+
+- **Mode:** point where PDF reaches its highest value (peak of the distribution)
+- **Median:** point $m$ where $\int_{-\infty}^{m} f_X(x)dx = 0.5$ (equal probability above and below)
+- **Mean (Expectation):** $E[X] = \int_{-\infty}^{\infty} x \, f_X(x)\,dx$ for continuous **X**; $E[X] = \sum_x x \, P(X=x)$ for discrete **X**
+  - Also denoted **μ** (Greek mu)
+  - **Geometric interpretation:** if you treat PDF as a physical density, the **mean is the balance point** (center of mass)
+  - Differs from median: shifting probability on one side of the median doesn't change it, but shifting probability changes the mean
+
+**Comparing mean, median, mode**
+
+- **Symmetric distribution:** mean = median = mode
+- **Right-skewed:** mode < median < mean (long right tail pulls mean rightward)
+- **Left-skewed:** mean < median < mode
+
+**Computing expectation: exponential example**
+
+- **Exponential PDF:** $f_X(x) = \lambda e^{-\lambda x}$ for $x \ge 0$
+- **Expectation:** $E[X] = \int_0^{\infty} x \, \lambda e^{-\lambda x}\,dx$
+- Using integration by parts: **E[X] = 1/λ**
+  - (Calculus note: this requires integration by parts — good practice if you want to derive it yourself)
+  - Intuition: higher rate **λ** means smaller average duration; inverse relationship
+
+---
+
+**Auction Theory: Extended Application of Order Statistics and Expectations**
+
+**Motivation for auctions**
+
+- Real-world examples: Christie's/Sotheby's (art), livestock (US), radio spectrum (government), procurement (fighter jets), eBay, Google ads, tulips (1600s Amsterdam), Roman Empire (193 CE)
+- Key question: **When should a seller use an auction vs a posted (fixed) price?**
+
+**Posted price vs auction: key factors**
+
+- **Unique/hard-to-value goods** → auction more likely (no market price reference)
+- **Information asymmetry** → auction helps seller learn valuation distribution
+- **Transactions costs** → high for auctions; posted price better for small items
+- **Cultural differences:** in some markets, haggling/negotiation is norm; in others, posted prices standard
+
+**Simple model: N potential buyers, valuations ~ U[0,1]**
+
+**Setup**
+
+- **N** potential buyers, each with valuation $V_i$ drawn independently from $U[0,1]$
+- Seller knows distribution but not individual valuations
+- Seller chooses: (1) **posted price** $p$, or (2) **auction mechanism**
+- Goal: compare expected profits
+
+**Posted price strategy**
+
+- Seller sets price **p**; sells iff at least one buyer has valuation $\ge p$
+- **Probability of sale:** $P(\text{sell}) = P(\max_i V_i \ge p) = 1 - P(\text{all } V_i < p) = 1 - p^N$
+  - Using fact that $N$-th order statistic from $U[0,1]$ has CDF $F(p) = p^N$
+- **Expected profit:** $\pi_{\text{posted}}(p) = p \cdot (1 - p^N)$
+- **Optimal price:** maximize over $p$ by taking derivative and setting to 0:
+  - $\frac{d\pi}{dp} = (1 - p^N) + p \cdot (-Np^{N-1}) = 0$
+  - $1 - p^N = Np^N \Rightarrow p^* = \left(\frac{1}{N+1}\right)^{1/N}$
+- **Expected profit at optimum:** $\pi^* = \frac{N}{(N+1)^{1+1/N}}$
+
+**Posted price results (table for N = 1 to 9)**
+
+| N | p*  | π(p*) |
+|---|-----|-------|
+| 1 | 0.5 | 0.25  |
+| 2 | 0.63| 0.30  |
+| 3 | 0.71| 0.33  |
+| 9 | 0.92| 0.49  |
+
+- As **N** increases, optimal price rises (more buyers → can charge higher price)
+- Expected profits also increase with **N**
+
+**English auction strategy**
+
+- **Mechanism:** price rises from 0; buyers drop out one-by-one until only one remains; winner pays second-highest valuation
+- **Winning price:** equal to $(N-1)$-th order statistic (second-highest valuation)
+- **Expected profit:** integrate over distribution of $(N-1)$-th order statistic
+  - PDF of $(N-1)$-th order stat from $U[0,1]$: $f_{V_{N-1}}(v) = (N-1)(1-v)^{N-1}$ for $v \in [0,1]$... wait, actually the $(N-1)$-th order stat distribution is different. Let me reconsider.
+  - Actually for second-highest (i.e., $(N-1)$-th order statistic): the seller gets the second-highest bid
+  - **Expected revenue:** $E[\text{second highest}] = \frac{N-1}{N+1}$
+
+**English auction results (comparison)**
+
+| N | Posted π | Auction π |
+|---|----------|-----------|
+| 1 | 0.25     | 0         |
+| 2 | 0.30     | 0.33      |
+| 3 | 0.33     | 0.50      |
+| 9 | 0.49     | 0.80      |
+
+- For **N = 1:** auction performs poorly (no competition → buyer gets it free)
+- For **N ≥ 2:** auction strictly better than posted price
+- Gap widens as **N** increases (more competition drives prices up in auction)
+
+**Key insight: information advantage of auctions**
+
+- **Seller doesn't need to know valuation distribution to run auction** — just conduct the mechanism
+- **Posted price requires accurate distribution knowledge** — get it wrong and seller loses significantly
+- If seller misestimates distribution for posted price (e.g., thinks $U[0,1/2]$ when actually $U[0,1]$), expected profit falls dramatically
+- Auctions more robust to uncertainty about valuations
+
+**Auction theory caveats**
+
+- Model assumes **independent valuations** (not always realistic; e.g., common-value auctions)
+- Model ignores **transactions costs** (setting up an auction is expensive)
+- Model rules out bargaining over posted price or reserve prices in auctions
+- **Revenue equivalence theorem:** under certain conditions, various standard auction mechanisms (English, Dutch, sealed-bid, etc.) yield same expected revenue
+
+**eBay example: shift from auctions to posted prices**
+
+- **History:** Founded 1995 as online auction site; ~100% auction listings in 2003
+- **Recent trend:** ~15% auction listings as of recent data; vast majority are "Buy It Now" (posted price)
+  - Sharp drop in fall 2008 coincided with eBay rule change allowing "good until canceled" listings
+
+**Google Trends data**
+
+- Search term "online auctions" declined from index ~90 to ~20
+- Search term "online prices" remained relatively flat
+- Interpretation: general interest in online auctions waning; interest in online pricing stable
+
+**Three hypotheses for eBay shift**
+
+1. **Compositional shift:** eBay's product mix changed from collectibles/antiques (good for auctions) to commodity items like iPhones/Xboxes (good for posted prices)
+
+2. **Consumer preference:** novelty of online auctions wore off; transactions costs (time bidding, waiting for auction end) became tedious
+
+3. **Price discovery benefits eroded:** 
+   - Online search (Google) makes it easy to find comparable prices
+   - eBay itself created thick national markets with lots of price information
+   - Sellers no longer need auctions to learn market values
+   - eBay may have been "victimized by its own success"
+
+**Research decomposition**
+
+- NBER paper analyzed these hypotheses by decomposing shift across product categories and seller experience levels
+- Found: compositional/experience effects account for small fraction of shift
+- Main finding: **returns to sellers using auctions have diminished over time** — auctions no longer provide sufficient profit premium to justify them
 
